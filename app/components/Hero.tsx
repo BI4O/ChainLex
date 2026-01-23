@@ -1,6 +1,3 @@
-import Image from "next/image";
-import heroBg from "@/public/hero-bg.png";
-
 const imgDown = "/scroll-down.svg";
 const imgGroup1420068994 = "/btn-arrow.svg";
 const imgVector9811 = "/divider-line.svg";
@@ -11,14 +8,10 @@ export default function Hero() {
       {/* Background Layer - z-0 */}
       <div className="absolute inset-0 z-0">
         {/* Background Image */}
-        <Image
-          src={heroBg}
+        <img
+          src="/hero-bg.png"
           alt="Hero background"
-          fill
-          priority
-          quality={85}
-          className="object-cover"
-          sizes="100vw"
+          className="absolute inset-0 h-full w-full object-cover"
         />
 
         {/* Dark Overlay */}
