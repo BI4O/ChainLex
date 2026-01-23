@@ -1,4 +1,5 @@
 import Image from "next/image";
+import heroBg from "@/public/hero-bg.png";
 
 const imgDown = "/scroll-down.svg";
 const imgGroup1420068994 = "/btn-arrow.svg";
@@ -11,7 +12,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-0">
         {/* Background Image */}
         <Image
-          src="/hero-bg.png"
+          src={heroBg}
           alt="Hero background"
           fill
           priority
