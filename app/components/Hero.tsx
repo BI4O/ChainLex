@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 const imgDown = "/scroll-down.svg";
 const imgGroup1420068994 = "/btn-arrow.svg";
@@ -25,19 +26,21 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full flex justify-center bg-black">
-      {/* 16:9 Container */}
-      <div ref={wrapperRef} className="relative aspect-video w-full max-w-[1920px] overflow-hidden">
-        {/* Background */}
-        <div className="absolute inset-0">
-          <img
-            src="/hero-bg.png"
-            alt="Hero background"
-            className="size-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
+    <section className="relative w-full flex justify-center bg-black overflow-hidden">
+      {/* 1. 背景层：直接相对于 Section 定位，不参与 16:9 比例锁定 */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/hero-bg.png"
+          alt="Hero background"
+          fill
+          priority
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-black/50" />
+      </div>
 
+      {/* 2. 内容层：保持 16:9 比例并居中 */}
+      <div ref={wrapperRef} className="relative z-10 aspect-video w-full max-w-[1920px] overflow-hidden">
         {/* Content - 严格居中 + 缩放 */}
         <div className="absolute inset-0 overflow-hidden">
           <div
