@@ -1,65 +1,96 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+
 const imgDown = "/scroll-down.svg";
 const imgGroup1420068994 = "/btn-arrow.svg";
 const imgVector9811 = "/divider-line.svg";
 
 export default function Hero() {
+  const [scale, setScale] = useState(1);
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateScale = () => {
+      if (wrapperRef.current) {
+        const containerWidth = wrapperRef.current.offsetWidth;
+        const newScale = Math.min(1, containerWidth / 1920);
+        setScale(newScale);
+      }
+    };
+
+    updateScale();
+    window.addEventListener('resize', updateScale);
+    return () => window.removeEventListener('resize', updateScale);
+  }, []);
+
   return (
-    <section className="relative h-screen w-full overflow-hidden bg-black">
-      {/* Background Layer - z-0 */}
-      <div className="absolute inset-0 z-0">
-        {/* Background Image */}
-        <img
-          src="/hero-bg.png"
-          alt="Hero background"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-
-        {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/50" />
-
-        {/* Scroll Down Indicator - positioned relative to 1920px center */}
-        <div className="absolute left-1/2 ml-[579px] size-[30px] top-[1013px]">
-          <img alt="" className="block max-w-none size-full" src={imgDown} />
-        </div>
-      </div>
-
-      {/* Hero Content - z-10 */}
-      <div className="relative z-10 h-full mx-auto max-w-[1920px]">
-        {/* Title */}
-        <div className="absolute content-stretch flex flex-col font-normal gap-4 items-center justify-center leading-normal left-[437px] text-center top-[420px]">
-          <h1 className="font-['Libre_Bodoni'] relative shrink-0 text-[110px] text-white">
-            Compliance,Codified
-          </h1>
-          <p className="font-['Inter'] not-italic relative shrink-0 text-[18px] text-white/80">
-            The AI-Driven Compliance Infrastructure for Tokenized Assets.
-          </p>
+    <section className="relative w-full flex justify-center bg-black">
+      {/* 16:9 Container */}
+      <div ref={wrapperRef} className="relative aspect-video w-full max-w-[1920px] overflow-hidden">
+        {/* Background */}
+        <div className="absolute inset-0">
+          <img
+            src="/hero-bg.png"
+            alt="Hero background"
+            className="size-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/50" />
         </div>
 
-        {/* CTA Buttons */}
-        <div className="absolute left-[759px] top-[721px]">
-          {/* Open Platform Button */}
-          <div className="absolute content-stretch flex gap-[2px] items-center left-0 top-0">
-            <p className="font-['Inter'] font-bold leading-normal not-italic relative shrink-0 text-[20px] text-white">
-              Open Platform
-            </p>
-            <div className="relative shrink-0 size-[24px]">
-              <img alt="" className="block max-w-none size-full" src={imgGroup1420068994} />
+        {/* Content - 严格居中 + 缩放 */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute left-1/2 top-1/2"
+            style={{
+              width: '1920px',
+              height: '1080px',
+              transform: `translate(-50%, -50%) ${scale < 1 ? `scale(${scale})` : ''}`,
+              transformOrigin: 'center center',
+            }}
+          >
+            {/* Scroll Down Indicator */}
+            <div className="absolute left-1/2 ml-[579px] size-[30px] top-[1013px]">
+              <img alt="" className="block max-w-none size-full" src={imgDown} />
             </div>
-          </div>
 
-          {/* Request a demo Button */}
-          <div className="absolute content-stretch flex gap-[2px] items-center left-[234px] top-0">
-            <p className="font-['Inter'] font-bold leading-normal not-italic relative shrink-0 text-[18px] text-white">
-              Request a demo
-            </p>
-            <div className="relative shrink-0 size-[24px]">
-              <img alt="" className="block max-w-none size-full" src={imgGroup1420068994} />
+            {/* Title */}
+            <div className="absolute content-stretch flex flex-col font-normal gap-4 items-center justify-center leading-normal left-[437px] text-center top-[420px]">
+              <h1 className="font-['Libre_Bodoni'] relative shrink-0 text-[110px] text-white">
+                Compliance,Codified
+              </h1>
+              <p className="font-['Inter'] not-italic relative shrink-0 text-[18px] text-white/80">
+                The AI-Driven Compliance Infrastructure for Tokenized Assets.
+              </p>
             </div>
-          </div>
 
-          {/* Divider Line */}
-          <div className="absolute h-0 left-0 top-[40px] w-[160px]">
-            <img alt="" className="block max-w-none size-full" src={imgVector9811} />
+            {/* CTA Buttons */}
+            <div className="absolute left-[759px] top-[721px]">
+              {/* Open Platform Button */}
+              <div className="absolute content-stretch flex gap-[2px] items-center left-0 top-0">
+                <p className="font-['Inter'] font-bold leading-normal not-italic relative shrink-0 text-[20px] text-white">
+                  Open Platform
+                </p>
+                <div className="relative shrink-0 size-[24px]">
+                  <img alt="" className="block max-w-none size-full" src={imgGroup1420068994} />
+                </div>
+              </div>
+
+              {/* Request a demo Button */}
+              <div className="absolute content-stretch flex gap-[2px] items-center left-[234px] top-0">
+                <p className="font-['Inter'] font-bold leading-normal not-italic relative shrink-0 text-[18px] text-white">
+                  Request a demo
+                </p>
+                <div className="relative shrink-0 size-[24px]">
+                  <img alt="" className="block max-w-none size-full" src={imgGroup1420068994} />
+                </div>
+              </div>
+
+              {/* Divider Line */}
+              <div className="absolute h-0 left-0 top-[40px] w-[160px]">
+                <img alt="" className="block max-w-none size-full" src={imgVector9811} />
+              </div>
+            </div>
           </div>
         </div>
       </div>
