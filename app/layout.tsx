@@ -17,6 +17,9 @@ const libreBodoni = Libre_Bodoni({
 export const metadata: Metadata = {
   title: "ChainLex - Compliance, Codified",
   description: "The AI-Driven Compliance Infrastructure for Tokenized Assets.",
+  icons: {
+    icon: "/logo-icon.svg",
+  },
 };
 
 export default function RootLayout({
